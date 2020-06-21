@@ -8,7 +8,7 @@
     "build-dev": "ng build --target=development --environment=dev",
     "build-staging": "ng build --target=production --environment=staging",
     "build-prod": "ng build --prod",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
