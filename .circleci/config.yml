@@ -38,10 +38,10 @@ jobs:
       # Build project with different configuration based on
       # the current branch
       - run:
-    name: Building
-    command: npm run build-dev
-    # Cache the dist folder for the deploy job
-    - save_cache:
-        key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-        paths:
-          - dist
+          name: Building
+          command: npm run build-dev
+      # Cache the dist folder for the deploy job
+      - save_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
