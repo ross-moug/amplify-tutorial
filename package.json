@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --env=local",
     "build": "ng build",
+    "build-dev": "ng build --target=development --environment=dev",
+    "build-staging": "ng build --target=production --environment=staging",
+    "build-prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
