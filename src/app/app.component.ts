@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { APIService } from './API.service';
+import { Component, OnInit } from "@angular/core";
+import { APIService } from "./API.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.less"]
 })
 export class AppComponent implements OnInit {
-  title = 'amplify-tutorial';
+  title = "amplify-tutorial";
   todos: any[] = [];
 
   constructor(private apiService: APIService) {}
@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
 
   createTodo(): void {
     this.apiService.CreateTodo({
-        name: 'Angular',
-        description: 'testing'
+        name: "Angular",
+        description: "testing"
     });
   }
 }
