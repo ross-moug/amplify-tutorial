@@ -62,12 +62,12 @@ jobs:
           key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       # Install AWS cli
       - run:
-          name: Install aws cli
+          name: Install AWS CLI
           command:
             sudo apt-get -y -qq install awscli
       # Install AWS Amplify cli
       - run:
-          name: Install amplify cli
+          name: Install Amplify CLI
           command:
             sudo npm install -g @aws-amplify/cli
       # Deploy to the S3 bucket corresponding to the current branch
