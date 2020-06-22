@@ -67,7 +67,7 @@ jobs:
       # Deploy to the S3 bucket corresponding to the current branch
       - run:
           name: Deploy
-          command:
+          command: |
             cd dist/amplify-tutorial/
             amplify publish
 
