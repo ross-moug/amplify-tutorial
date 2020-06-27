@@ -69,6 +69,7 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
+            amplify init
             amplify publish
 
 workflows:
