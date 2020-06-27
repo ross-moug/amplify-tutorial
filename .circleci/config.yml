@@ -69,7 +69,7 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
-            amplify init --amplify $AMPLIFY_CONFIG --frontend $FRONTEND --providers $PROVIDERS --yes
+            amplify init --yes --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS
             amplify publish --yes
 
 workflows:
