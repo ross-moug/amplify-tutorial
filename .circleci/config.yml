@@ -78,8 +78,8 @@ jobs:
             echo $AMPLIFY_TEST
             echo $FRONTEND_TEST
             echo $PROVIDERS_TEST
-            echo AWS_CLOUD_FORMATION_CONFIG_TEST
-            echo ANGULAR_TEST
+            echo $AWS_CLOUD_FORMATION_CONFIG_TEST
+            echo $ANGULAR_TEST
             amplify init --yes --amplify $AMPLIFY_TEST --frontend $FRONTEND_TEST --providers $PROVIDERS_TEST
             amplify publish --yes
 
