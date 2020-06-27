@@ -51,6 +51,12 @@ jobs:
     working_directory: ~/project
     docker:
       - image: circleci/node:12.0-browsers
+        environment:
+          ANGULAR_TEST: "{ \"SourceDir\":\"src\", \"DistributionDir\":\"dist/amplify-tutorial\", \"BuildCommand\":\"npm.cmd run-script build\", \"StartCommand\":\"ng serve\" }"
+          AMPLIFY_TEST: "{ \"projectName\":\"amplifyTutorial\", \"envName\": \"dev\" }"
+          FRONTEND_TEST: "{ \"frontend\": \"javascript\", \"framework\": \"angular\", \"config\": $ANGULAR_TEST }"
+          AWS_CLOUD_FORMATION_CONFIG_TEST: "{ \"configLevel\": \"project\", \"useProfile\": false, \"accessKeyId\": $AWS_ACCESS_KEY_ID, \"secretAccessKey\": $AWS_SECRET_ACCESS_KEY, \"region\": \"eu-west-2\" }"
+          PROVIDERS_TEST: "{ \"awscloudformation\": $AWS_CLOUD_FORMATION_CONFIG_TEST }"
     steps:
       # Log the current branch
       - run:
@@ -69,10 +75,10 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
-            echo $AMPLIFY | base64 --decode
-            echo $FRONTEND | base64 --decode
-            echo $PROVIDERS | base64 --decode
-            amplify init --yes --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS
+            echo $AMPLIFY_TEST
+            echo $FRONTEND_TEST
+            echo $PROVIDERS_TEST
+            amplify init --yes --amplify $AMPLIFY_TEST --frontend $FRONTEND_TEST --providers $PROVIDERS_TEST
             amplify publish --yes
 
 workflows:
