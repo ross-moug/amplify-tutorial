@@ -69,6 +69,30 @@ export type DeleteTodoInput = {
   id?: string | null;
 };
 
+export type CreateProductInput = {
+  id?: string | null;
+  name: string;
+  description?: string | null;
+};
+
+export type ModelProductConditionInput = {
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelProductConditionInput | null> | null;
+  or?: Array<ModelProductConditionInput | null> | null;
+  not?: ModelProductConditionInput | null;
+};
+
+export type UpdateProductInput = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+};
+
+export type DeleteProductInput = {
+  id?: string | null;
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
@@ -92,6 +116,15 @@ export type ModelIDInput = {
   attributeExists?: boolean | null;
   attributeType?: ModelAttributeTypes | null;
   size?: ModelSizeInput | null;
+};
+
+export type ModelProductFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelProductFilterInput | null> | null;
+  or?: Array<ModelProductFilterInput | null> | null;
+  not?: ModelProductFilterInput | null;
 };
 
 export type CreateTodoMutation = {
@@ -121,6 +154,33 @@ export type DeleteTodoMutation = {
   updatedAt: string;
 };
 
+export type CreateProductMutation = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateProductMutation = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteProductMutation = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type GetTodoQuery = {
   __typename: "Todo";
   id: string;
@@ -134,6 +194,28 @@ export type ListTodosQuery = {
   __typename: "ModelTodoConnection";
   items: Array<{
     __typename: "Todo";
+    id: string;
+    name: string;
+    description: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetProductQuery = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListProductsQuery = {
+  __typename: "ModelProductConnection";
+  items: Array<{
+    __typename: "Product";
     id: string;
     name: string;
     description: string | null;
@@ -163,6 +245,33 @@ export type OnUpdateTodoSubscription = {
 
 export type OnDeleteTodoSubscription = {
   __typename: "Todo";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateProductSubscription = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateProductSubscription = {
+  __typename: "Product";
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteProductSubscription = {
+  __typename: "Product";
   id: string;
   name: string;
   description: string | null;
@@ -249,6 +358,81 @@ export class APIService {
     )) as any;
     return <DeleteTodoMutation>response.data.deleteTodo;
   }
+  async CreateProduct(
+    input: CreateProductInput,
+    condition?: ModelProductConditionInput
+  ): Promise<CreateProductMutation> {
+    const statement = `mutation CreateProduct($input: CreateProductInput!, $condition: ModelProductConditionInput) {
+        createProduct(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateProductMutation>response.data.createProduct;
+  }
+  async UpdateProduct(
+    input: UpdateProductInput,
+    condition?: ModelProductConditionInput
+  ): Promise<UpdateProductMutation> {
+    const statement = `mutation UpdateProduct($input: UpdateProductInput!, $condition: ModelProductConditionInput) {
+        updateProduct(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateProductMutation>response.data.updateProduct;
+  }
+  async DeleteProduct(
+    input: DeleteProductInput,
+    condition?: ModelProductConditionInput
+  ): Promise<DeleteProductMutation> {
+    const statement = `mutation DeleteProduct($input: DeleteProductInput!, $condition: ModelProductConditionInput) {
+        deleteProduct(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteProductMutation>response.data.deleteProduct;
+  }
   async GetTodo(id: string): Promise<GetTodoQuery> {
     const statement = `query GetTodo($id: ID!) {
         getTodo(id: $id) {
@@ -302,6 +486,59 @@ export class APIService {
     )) as any;
     return <ListTodosQuery>response.data.listTodos;
   }
+  async GetProduct(id: string): Promise<GetProductQuery> {
+    const statement = `query GetProduct($id: ID!) {
+        getProduct(id: $id) {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetProductQuery>response.data.getProduct;
+  }
+  async ListProducts(
+    filter?: ModelProductFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListProductsQuery> {
+    const statement = `query ListProducts($filter: ModelProductFilterInput, $limit: Int, $nextToken: String) {
+        listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            description
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListProductsQuery>response.data.listProducts;
+  }
   OnCreateTodoListener: Observable<OnCreateTodoSubscription> = API.graphql(
     graphqlOperation(
       `subscription OnCreateTodo {
@@ -346,4 +583,55 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteTodoSubscription>;
+
+  OnCreateProductListener: Observable<
+    OnCreateProductSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateProduct {
+        onCreateProduct {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnCreateProductSubscription>;
+
+  OnUpdateProductListener: Observable<
+    OnUpdateProductSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateProduct {
+        onUpdateProduct {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnUpdateProductSubscription>;
+
+  OnDeleteProductListener: Observable<
+    OnDeleteProductSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteProduct {
+        onDeleteProduct {
+          __typename
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnDeleteProductSubscription>;
 }
