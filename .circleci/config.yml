@@ -69,6 +69,9 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
+            echo $AMPLIFY
+            echo $FRONTEND
+            echo $PROVIDERS
             amplify init --yes --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS
             amplify publish --yes
 
