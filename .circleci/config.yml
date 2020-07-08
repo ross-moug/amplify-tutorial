@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Install Amplify CLI
           command: sudo npm install -g @aws-amplify/cli
-      # Deploy to the S3 bucket corresponding to the current branch
+      # Deploy to AWS Amplify
       - run:
           name: Deploy
           command: |
