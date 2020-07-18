@@ -46,6 +46,11 @@ jobs:
           paths:
             - dist
       # Cache the bin folder for the deploy job
+        - save_cache:
+            key: v1-bin-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+              - bin
+      # Cache the amplify folder for the deploy job
       - save_cache:
           key: v1-amplify-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
@@ -67,6 +72,10 @@ jobs:
           key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       # Restore cache from the build job which contains the
       # bin folder that needs to be deployed
+     - restore_cache:
+         key: v1-bin-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      # Restore cache from the build job which contains the
+      # amplify folder that needs to be deployed
       - restore_cache:
           key: v1-amplify-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       # Install AWS Amplify cli
@@ -77,7 +86,8 @@ jobs:
       - run:
           name: Deploy
           command: |
-            amplify init --yes
+            chmod +x bin/amplify-headless-init.sh
+            ./bin/amplify-headless-init.sh
             amplify push --yes
             amplify publish --yes
 
