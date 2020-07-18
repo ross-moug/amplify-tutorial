@@ -80,6 +80,7 @@ jobs:
             cd dist/amplify-tutorial/
             chmod +x ../../bin/amplify-headless-init.sh
             ./../../bin/amplify-headless-init.sh
+            amplify push --yes
             amplify publish --yes
 
 workflows:
