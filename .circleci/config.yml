@@ -46,7 +46,7 @@ jobs:
           paths:
             - dist
       # Cache the bin folder for the deploy job
-        - save_cache:
+      - save_cache:
           key: v1-bin-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - bin
