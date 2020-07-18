@@ -73,7 +73,7 @@ jobs:
       # Restore cache from the build job which contains the
       # bin folder that needs to be deployed
      - restore_cache:
-         key: v1-bin-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: v1-bin-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       # Restore cache from the build job which contains the
       # amplify folder that needs to be deployed
       - restore_cache:
