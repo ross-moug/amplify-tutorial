@@ -78,7 +78,8 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
-            ../../bin/amplify-headless-init.sh
+            chmod +x ../../bin/amplify-headless-init.sh
+            ./../../bin/amplify-headless-init.sh
             amplify publish --yes
 
 workflows:
