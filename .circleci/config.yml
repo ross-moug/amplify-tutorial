@@ -69,7 +69,7 @@ jobs:
           name: Deploy
           command: |
             cd dist/amplify-tutorial/
-            amplify init --yes --amplify $AMPLIFY --frontend $FRONTEND --providers $PROVIDERS
+            bin/amplify-headless-init.sh
             amplify publish --yes
 
 workflows:
